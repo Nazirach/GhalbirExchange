@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghalbir Exchange - Cryptocurrency Trading Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="img/logo.png" alt="Ghalbir Exchange" class="logo">
+                <h1>Ghalbir Exchange</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active" data-page="dashboard"><i class="fas fa-chart-line"></i> Dashboard</li>
+                <li data-page="markets"><i class="fas fa-exchange-alt"></i> Markets</li>
+                <li data-page="trade"><i class="fas fa-chart-bar"></i> Trade</li>
+                <li data-page="wallet"><i class="fas fa-wallet"></i> Wallet</li>
+                <li data-page="orders"><i class="fas fa-list"></i> Orders</li>
+                <li data-page="history"><i class="fas fa-history"></i> History</li>
+                <li data-page="settings"><i class="fas fa-cog"></i> Settings</li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-nav">
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-container">
+                    <input type="text" placeholder="Search markets...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-menu">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="img/avatar.png" alt="User Avatar" class="avatar">
+                        <span class="username">Welcome, <span id="user-name">User</span></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div class="page active" id="dashboard-page">
+                    <h2>Dashboard</h2>
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                            <div class="stat-content">
+                                <h3>Total Balance</h3>
+                                <p class="stat-value">0.00 GBR</p>
+                                <p class="stat-change positive">+0.00%</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="stat-content">
+                                <h3>GBR Price</h3>
+                                <p class="stat-value">0.00 USDT</p>
+                                <p class="stat-change negative">-0.00%</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-exchange-alt"></i></div>
+                            <div class="stat-content">
+                                <h3>24h Volume</h3>
+                                <p class="stat-value">0.00 USDT</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-list"></i></div>
+                            <div class="stat-content">
+                                <h3>Open Orders</h3>
+                                <p class="stat-value">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-charts">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>GBR/USDT</h3>
+                                <div class="chart-controls">
+                                    <button class="btn btn-sm active">1H</button>
+                                    <button class="btn btn-sm">1D</button>
+                                    <button class="btn btn-sm">1W</button>
+                                    <button class="btn btn-sm">1M</button>
+                                </div>
+                            </div>
+                            <div class="chart" id="price-chart">
+                                <!-- Chart will be rendered here -->
+                                <div class="chart-placeholder">
+                                    <i class="fas fa-chart-line"></i>
+                                    <p>Price chart will be displayed here</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-tables">
+                        <div class="table-container">
+                            <h3>Recent Trades</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Pair</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th>Amount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-trades">
+                                    <tr>
+                                        <td colspan="6" class="text-center">No recent trades</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Markets Page -->
+                <div class="page" id="markets-page">
+                    <h2>Markets</h2>
+                    <div class="markets-filter">
+                        <div class="filter-tabs">
+                            <button class="filter-tab active" data-filter="all">All</button>
+                            <button class="filter-tab" data-filter="gbr">GBR</button>
+                            <button class="filter-tab" data-filter="usdt">USDT</button>
+                            <button class="filter-tab" data-filter="favorites">Favorites</button>
+                        </div>
+                        <div class="search-box">
+                            <input type="text" placeholder="Search markets">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="markets-table-container">
+                        <table class="data-table markets-table">
+                            <thead>
+                                <tr>
+                                    <th><i class="far fa-star"></i></th>
+                                    <th>Pair</th>
+                                    <th>Last Price</th>
+                                    <th>24h Change</th>
+                                    <th>24h High</th>
+                                    <th>24h Low</th>
+                                    <th>24h Volume</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="markets-list">
+                                <tr>
+                                    <td><i class="far fa-star"></i></td>
+                                    <td>GBR/USDT</td>
+                                    <td>0.00</td>
+                                    <td class="text-danger">-0.00%</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td><button class="btn btn-primary btn-sm">Trade</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Trade Page -->
+                <div class="page" id="trade-page">
+                    <h2>Trade</h2>
+                    <div class="trading-container">
+                        <div class="trading-pairs">
+                            <div class="pair-selector">
+                                <select id="trading-pair-select">
+                                    <option value="GBR/USDT">GBR/USDT</option>
+                                </select>
+                                <div class="pair-info">
+                                    <div class="price-info">
+                                        <span class="current-price">0.00</span>
+                                        <span class="price-change negative">-0.00%</span>
+                                    </div>
+                                    <div class="volume-info">
+                                        <span>24h Volume: </span>
+                                        <span class="volume-value">0.00 USDT</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="trading-view">
+                            <div class="chart-container">
+                                <div class="chart-header">
+                                    <h3>GBR/USDT</h3>
+                                    <div class="chart-controls">
+                                        <button class="btn btn-sm active">1H</button>
+                                        <button class="btn btn-sm">1D</button>
+                                        <button class="btn btn-sm">1W</button>
+                                        <button class="btn btn-sm">1M</button>
+                                    </div>
+                                </div>
+                                <div class="chart" id="trading-chart">
+                                    <!-- Chart will be rendered here -->
+                                    <div class="chart-placeholder">
+                                        <i class="fas fa-chart-line"></i>
+                                        <p>Trading chart will be displayed here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-book">
+                            <h3>Order Book</h3>
+                            <div class="order-book-header">
+                                <div>Price (USDT)</div>
+                                <div>Amount (GBR)</div>
+                                <div>Total (USDT)</div>
+                            </div>
+                            <div class="order-book-content">
+                                <div class="asks" id="order-book-asks">
+                                    <!-- Sell orders will be displayed here -->
+                                    <div class="order-row">
+                                        <div class="price">0.00</div>
+                                        <div class="amount">0.00</div>
+                                        <div class="total">0.00</div>
+                                        <div class="depth-visualization"></div>
+                                    </div>
+                                </div>
+                                <div class="spread">
+                                    <span>Spread: 0.00 (0.00%)</span>
+                                </div>
+                                <div class="bids" id="order-book-bids">
+                                    <!-- Buy orders will be displayed here -->
+                                    <div class="order-row">
+                                        <div class="price">0.00</div>
+                                        <div class="amount">0.00</div>
+                                        <div class="total">0.00</div>
+                                        <div class="depth-visualization"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recent-trades">
+                            <h3>Recent Trades</h3>
+                            <div class="recent-trades-header">
+                                <div>Price (USDT)</div>
+                                <div>Amount (GBR)</div>
+                                <div>Time</div>
+                            </div>
+                            <div class="recent-trades-content" id="market-trades">
+                                <!-- Recent trades will be displayed here -->
+                                <div class="trade-row buy">
+                                    <div class="price">0.00</div>
+                                    <div class="amount">0.00</div>
+                                    <div class="time">00:00:00</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-form">
+                            <div class="order-form-tabs">
+                                <button class="order-tab active" data-form="limit">Limit</button>
+                                <button class="order-tab" data-form="market">Market</button>
+                                <button class="order-tab" data-form="stop-limit">Stop-Limit</button>
+                            </div>
+                            <div class="order-type-tabs">
+                                <button class="type-tab active" data-type="buy">Buy</button>
+                                <button class="type-tab" data-type="sell">Sell</button>
+                            </div>
+                            <div class="order-form-content">
+                                <div class="form-group">
+                                    <label for="price-input">Price (USDT)</label>
+                                    <input type="number" id="price-input" step="0.0001" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="amount-input">Amount (GBR)</label>
+                                    <input type="number" id="amount-input" step="0.0001" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="total-input">Total (USDT)</label>
+                                    <input type="number" id="total-input" step="0.0001" min="0" readonly>
+                                </div>
+                                <div class="amount-buttons">
+                                    <button class="amount-btn" data-percent="25">25%</button>
+                                    <button class="amount-btn" data-percent="50">50%</button>
+                                    <button class="amount-btn" data-percent="75">75%</button>
+                                    <button class="amount-btn" data-percent="100">100%</button>
+                                </div>
+                                <div class="available-balance">
+                                    <span>Available: </span>
+                                    <span class="balance-value">0.00 USDT</span>
+                                </div>
+                                <button class="btn btn-success btn-block" id="buy-btn">Buy GBR</button>
+                                <button class="btn btn-danger btn-block" id="sell-btn" style="display: none;">Sell GBR</button>
+                            </div>
+                        </div>
+                        <div class="open-orders">
+                            <h3>Open Orders</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Pair</th>
+                                        <th>Type</th>
+                                        <th>Side</th>
+                                        <th>Price</th>
+                                        <th>Amount</th>
+                                        <th>Filled</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="open-orders">
+                                    <tr>
+                                        <td colspan="9" class="text-center">No open orders</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wallet Page -->
+                <div class="page" id="wallet-page">
+                    <h2>Wallet</h2>
+                    <div class="wallet-overview">
+                        <div class="wallet-balance">
+                            <h3>Total Balance</h3>
+                            <div class="balance-amount">
+                                <span class="amount">0.00</span>
+                                <span class="currency">USDT</span>
+                            </div>
+                            <div class="balance-actions">
+                                <button class="btn btn-primary"><i class="fas fa-download"></i> Deposit</button>
+                                <button class="btn btn-secondary"><i class="fas fa-upload"></i> Withdraw</button>
+                            </div>
+                        </div>
+                        <div class="wallet-search">
+                            <input type="text" placeholder="Search assets">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="wallet-assets">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Asset</th>
+                                    <th>Available Balance</th>
+                                    <th>In Order</th>
+                                    <th>Total Balance</th>
+                                    <th>Value (USDT)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="asset-list">
+                                <tr>
+                                    <td>
+                                        <div class="asset-info">
+                                            <img src="img/gbr.png" alt="GBR" class="asset-icon">
+                                            <div>
+                                                <div class="asset-name">Ghalbir</div>
+                                                <div class="asset-symbol">GBR</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">Deposit</button>
+                                        <button class="btn btn-sm btn-secondary">Withdraw</button>
+                                        <button class="btn btn-sm btn-info">Trade</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="asset-info">
+                                            <img src="img/usdt.png" alt="USDT" class="asset-icon">
+                                            <div>
+                                                <div class="asset-name">Tether</div>
+                                                <div class="asset-symbol">USDT</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>0.00</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary">Deposit</button>
+                                        <button class="btn btn-sm btn-secondary">Withdraw</button>
+                                        <button class="btn btn-sm btn-info">Trade</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Orders Page -->
+                <div class="page" id="orders-page">
+                    <h2>Orders</h2>
+                    <div class="orders-tabs">
+                        <button class="order-tab active" data-orders="open">Open Orders</button>
+                        <button class="order-tab" data-orders="closed">Order History</button>
+                    </div>
+                    <div class="orders-filter">
+                        <div class="filter-group">
+                            <label>Pair:</label>
+                            <select id="order-pair-filter">
+                                <option value="all">All</option>
+                                <option value="GBR/USDT">GBR/USDT</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Side:</label>
+                            <select id="order-side-filter">
+                                <option value="all">All</option>
+                                <option value="buy">Buy</option>
+                                <option value="sell">Sell</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Type:</label>
+                            <select id="order-type-filter">
+                                <option value="all">All</option>
+                                <option value="limit">Limit</option>
+                                <option value="market">Market</option>
+                                <option value="stop_limit">Stop-Limit</option>
+                            </select>
+                        </div>
+                        <div class="filter-group date-range">
+                            <label>Date Range:</label>
+                            <input type="date" id="order-date-from">
+                            <span>to</span>
+                            <input type="date" id="order-date-to">
+                        </div>
+                        <button class="btn btn-primary" id="order-filter-apply">Apply</button>
+                        <button class="btn btn-secondary" id="order-filter-reset">Reset</button>
+                    </div>
+                    <div class="orders-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Pair</th>
+                                    <th>Type</th>
+                                    <th>Side</th>
+                                    <th>Price</th>
+                                    <th>Amount</th>
+                                    <th>Filled</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-list">
+                                <tr>
+                                    <td colspan="10" class="text-center">No orders found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <button class="pagination-btn" id="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                            <span class="pagination-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+                            <button class="pagination-btn" id="next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Page -->
+                <div class="page" id="history-page">
+                    <h2>History</h2>
+                    <div class="history-tabs">
+                        <button class="history-tab active" data-history="trades">Trade History</button>
+                        <button class="history-tab" data-history="deposits">Deposits</button>
+                        <button class="history-tab" data-history="withdrawals">Withdrawals</button>
+                    </div>
+                    <div class="history-filter">
+                        <div class="filter-group">
+                            <label>Asset:</label>
+                            <select id="history-asset-filter">
+                                <option value="all">All</option>
+                                <option value="GBR">GBR</option>
+                                <option value="USDT">USDT</option>
+                            </select>
+                        </div>
+                        <div class="filter-group date-range">
+                            <label>Date Range:</label>
+                            <input type="date" id="history-date-from">
+                            <span>to</span>
+                            <input type="date" id="history-date-to">
+                        </div>
+                        <button class="btn btn-primary" id="history-filter-apply">Apply</button>
+                        <button class="btn btn-secondary" id="history-filter-reset">Reset</button>
+                    </div>
+                    <div class="history-table-container">
+                        <!-- Trade History Table -->
+                        <div class="history-table active" id="trades-history">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Pair</th>
+                                        <th>Side</th>
+                                        <th>Price</th>
+                                        <th>Amount</th>
+                                        <th>Fee</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trades-history-list">
+                                    <tr>
+                                        <td colspan="7" class="text-center">No trade history</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Deposits History Table -->
+                        <div class="history-table" id="deposits-history">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Asset</th>
+                                        <th>Amount</th>
+                                        <th>Address</th>
+                                        <th>Transaction ID</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="deposits-history-list">
+                                    <tr>
+                                        <td colspan="6" class="text-center">No deposit history</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Withdrawals History Table -->
+                        <div class="history-table" id="withdrawals-history">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Asset</th>
+                                        <th>Amount</th>
+                                        <th>Fee</th>
+                                        <th>Address</th>
+                                        <th>Transaction ID</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="withdrawals-history-list">
+                                    <tr>
+                                        <td colspan="7" class="text-center">No withdrawal history</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="pagination">
+                            <button class="pagination-btn" id="history-prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                            <span class="pagination-info">Page <span id="history-current-page">1</span> of <span id="history-total-pages">1</span></span>
+                            <button class="pagination-btn" id="history-next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page" id="settings-page">
+                    <h2>Settings</h2>
+                    <div class="settings-container">
+                        <div class="settings-sidebar">
+                            <ul class="settings-menu">
+                                <li class="active" data-settings="profile">Profile</li>
+                                <li data-settings="security">Security</li>
+                                <li data-settings="kyc">KYC Verification</li>
+                                <li data-settings="api">API Keys</li>
+                                <li data-settings="preferences">Preferences</li>
+                            </ul>
+                        </div>
+                        <div class="settings-content">
+                            <!-- Profile Settings -->
+                            <div class="settings-section active" id="profile-settings">
+                                <h3>Profile Settings</h3>
+                                <form id="profile-form">
+                                    <div class="form-group">
+                                        <label for="profile-email">Email</label>
+                                        <input type="email" id="profile-email" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-name">Full Name</label>
+                                        <input type="text" id="profile-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-country">Country</label>
+                                        <select id="profile-country">
+                                            <option value="">Select Country</option>
+                                            <option value="US">United States</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="AU">Australia</option>
+                                            <option value="ID">Indonesia</option>
+                                            <!-- More countries would be added here -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-phone">Phone Number</label>
+                                        <input type="tel" id="profile-phone">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </form>
+                            </div>
+                            
+                            <!-- Security Settings -->
+                            <div class="settings-section" id="security-settings">
+                                <h3>Security Settings</h3>
+                                <div class="security-item">
+                                    <div class="security-info">
+                                        <h4>Password</h4>
+                                        <p>Change your account password</p>
+                                    </div>
+                                    <button class="btn btn-primary" id="change-password-btn">Change Password</button>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-info">
+                                        <h4>Two-Factor Authentication (2FA)</h4>
+                                        <p>Add an extra layer of security to your account</p>
+                                        <div class="status-badge" id="2fa-status">Disabled</div>
+                                    </div>
+                                    <button class="btn btn-primary" id="setup-2fa-btn">Enable 2FA</button>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-info">
+                                        <h4>Login History</h4>
+                                        <p>View your recent login activities</p>
+                                    </div>
+                                    <button class="btn btn-secondary" id="view-login-history-btn">View History</button>
+                                </div>
+                                <div class="security-item">
+                                    <div class="security-info">
+                                        <h4>Account Activity</h4>
+                                        <p>View your recent account activities</p>
+                                    </div>
+                                    <button class="btn btn-secondary" id="view-account-activity-btn">View Activity</button>
+                                </div>
+                            </div>
+                            
+                            <!-- KYC Verification -->
+                            <div class="settings-section" id="kyc-settings">
+                                <h3>KYC Verification</h3>
+                                <div class="kyc-status">
+                                    <div class="status-badge" id="kyc-status-badge">Not Verified</div>
+                                    <p id="kyc-status-message">Complete the verification process to unlock full trading features.</p>
+                                </div>
+                                <div class="kyc-steps">
+                                    <div class="kyc-step active" id="kyc-step-1">
+                                        <div class="step-number">1</div>
+                                        <div class="step-content">
+                                            <h4>Basic Information</h4>
+                                            <p>Provide your basic personal information</p>
+                                            <button class="btn btn-primary" id="kyc-step-1-btn">Start</button>
+                                        </div>
+                                    </div>
+                                    <div class="kyc-step" id="kyc-step-2">
+                                        <div class="step-number">2</div>
+                                        <div class="step-content">
+                                            <h4>Identity Verification</h4>
+                                            <p>Upload your identification documents</p>
+                                            <button class="btn btn-primary" id="kyc-step-2-btn" disabled>Start</button>
+                                        </div>
+                                    </div>
+                                    <div class="kyc-step" id="kyc-step-3">
+                                        <div class="step-number">3</div>
+                                        <div class="step-content">
+                                            <h4>Address Verification</h4>
+                                            <p>Upload proof of address document</p>
+                                            <button class="btn btn-primary" id="kyc-step-3-btn" disabled>Start</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- API Keys -->
+                            <div class="settings-section" id="api-settings">
+                                <h3>API Keys</h3>
+                                <p>Create and manage API keys for programmatic trading</p>
+                                <div class="api-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <p>API keys provide direct access to your account. Never share your API keys with anyone.</p>
+                                </div>
+                                <button class="btn btn-primary" id="create-api-key-btn">Create New API Key</button>
+                                <div class="api-keys-list">
+                                    <h4>Your API Keys</h4>
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Label</th>
+                                                <th>API Key</th>
+                                                <th>Created</th>
+                                                <th>Permissions</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="api-keys-list">
+                                            <tr>
+                                                <td colspan="6" class="text-center">No API keys found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <!-- Preferences -->
+                            <div class="settings-section" id="preferences-settings">
+                                <h3>Preferences</h3>
+                                <div class="preference-item">
+                                    <div class="preference-info">
+                                        <h4>Theme</h4>
+                                        <p>Choose your preferred theme</p>
+                                    </div>
+                                    <div class="preference-control">
+                                        <select id="theme-select">
+                                            <option value="light">Light</option>
+                                            <option value="dark" selected>Dark</option>
+                                            <option value="system">System Default</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="preference-item">
+                                    <div class="preference-info">
+                                        <h4>Language</h4>
+                                        <p>Choose your preferred language</p>
+                                    </div>
+                                    <div class="preference-control">
+                                        <select id="language-select">
+                                            <option value="en">English</option>
+                                            <option value="id">Bahasa Indonesia</option>
+                                            <option value="zh">中文</option>
+                                            <option value="es">Español</option>
+                                            <option value="ru">Русский</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="preference-item">
+                                    <div class="preference-info">
+                                        <h4>Notifications</h4>
+                                        <p>Manage your notification preferences</p>
+                                    </div>
+                                    <div class="preference-control">
+                                        <button class="btn btn-secondary" id="notification-settings-btn">Configure</button>
+                                    </div>
+                                </div>
+                                <div class="preference-item">
+                                    <div class="preference-info">
+                                        <h4>Default Trading Pair</h4>
+                                        <p>Set your default trading pair</p>
+                                    </div>
+                                    <div class="preference-control">
+                                        <select id="default-pair-select">
+                                            <option value="GBR/USDT">GBR/USDT</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" id="save-preferences-btn">Save Preferences</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login to Ghalbir Exchange</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="register-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create an Account</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
+                        <div class="password-strength">
+                            <div class="strength-bar"></div>
+                            <span class="strength-text">Password strength: Weak</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-full-name">Full Name</label>
+                        <input type="text" id="register-full-name" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input type="checkbox" id="terms-agree" required>
+                            <label for="terms-agree">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                </form>
+                <div class="modal-footer">
+                    <p>Already have an account? <a href="#" id="login-link">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2FA Modal -->
+    <div class="modal" id="2fa-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Two-Factor Authentication</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="2fa-setup" id="2fa-setup-container">
+                    <p>Scan the QR code with your authenticator app:</p>
+                    <div class="qr-container" id="2fa-qr-code">
+                        <!-- QR code will be displayed here -->
+                    </div>
+                    <div class="secret-key">
+                        <p>Or enter this secret key manually:</p>
+                        <div class="secret-key-value" id="2fa-secret-key">ABCDEFGHIJKLMNOP</div>
+                        <button class="btn btn-sm btn-secondary" id="copy-secret-key">Copy</button>
+                    </div>
+                </div>
+                <form id="2fa-form">
+                    <div class="form-group">
+                        <label for="2fa-code">Enter 6-digit code from your authenticator app</label>
+                        <input type="text" id="2fa-code" maxlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div class="modal" id="deposit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Deposit <span id="deposit-asset">GBR</span></h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="deposit-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Only send <span id="deposit-asset-name">Ghalbir</span> (<span id="deposit-asset-symbol">GBR</span>) to this address. Sending any other asset may result in permanent loss.</p>
+                </div>
+                <div class="deposit-address">
+                    <p>Your <span id="deposit-asset-symbol-2">GBR</span> deposit address:</p>
+                    <div class="address-container">
+                        <div class="address" id="deposit-address-value">0x1234567890abcdef1234567890abcdef12345678</div>
+                        <button class="btn btn-sm btn-secondary" id="copy-deposit-address">Copy</button>
+                    </div>
+                    <div class="qr-container" id="deposit-qr-code">
+                        <!-- QR code will be displayed here -->
+                    </div>
+                </div>
+                <div class="deposit-info">
+                    <div class="info-item">
+                        <div class="info-label">Minimum Deposit</div>
+                        <div class="info-value">0.001 <span id="deposit-asset-symbol-3">GBR</span></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Expected Arrival</div>
+                        <div class="info-value">12 network confirmations</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Expected Unlock</div>
+                        <div class="info-value">12 network confirmations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div class="modal" id="withdraw-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Withdraw <span id="withdraw-asset">GBR</span></h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="withdraw-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Please double-check the withdrawal address. Withdrawals to incorrect addresses cannot be recovered.</p>
+                </div>
+                <form id="withdraw-form">
+                    <div class="form-group">
+                        <label for="withdraw-address">Withdrawal Address</label>
+                        <input type="text" id="withdraw-address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="withdraw-amount">Amount</label>
+                        <div class="amount-input-container">
+                            <input type="number" id="withdraw-amount" step="0.0001" min="0" required>
+                            <span class="amount-max">Max: <a href="#" id="withdraw-max-amount">0.00</a></span>
+                        </div>
+                    </div>
+                    <div class="withdraw-summary">
+                        <div class="summary-item">
+                            <div class="summary-label">Available Balance</div>
+                            <div class="summary-value"><span id="withdraw-available-balance">0.00</span> <span id="withdraw-asset-symbol">GBR</span></div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">Fee</div>
+                            <div class="summary-value"><span id="withdraw-fee">0.00</span> <span id="withdraw-asset-symbol-2">GBR</span></div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-label">You Will Receive</div>
+                            <div class="summary-value"><span id="withdraw-receive-amount">0.00</span> <span id="withdraw-asset-symbol-3">GBR</span></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input type="checkbox" id="withdraw-confirm" required>
+                            <label for="withdraw-confirm">I confirm that the withdrawal address is correct</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Withdraw</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal" id="change-password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Change Password</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="change-password-form">
+                    <div class="form-group">
+                        <label for="current-password">Current Password</label>
+                        <input type="password" id="current-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">New Password</label>
+                        <input type="password" id="new-password" required>
+                        <div class="password-strength">
+                            <div class="strength-bar"></div>
+                            <span class="strength-text">Password strength: Weak</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-new-password">Confirm New Password</label>
+                        <input type="password" id="confirm-new-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>
